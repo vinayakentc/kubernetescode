@@ -9,7 +9,7 @@ node {
 
     stage('Build image') {
   
-       app = docker.build("vinayakentc/test")
+       app = sudo docker.build("vinayakentc/test")
     }
 
     stage('Test image') {
@@ -22,7 +22,7 @@ node {
 
     stage('Push image') {
         
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+        sudo docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
         }
     }
