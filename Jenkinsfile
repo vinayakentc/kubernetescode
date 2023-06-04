@@ -22,9 +22,9 @@ node {
     }
 
     stage('Push image') {
-        
-        sudo docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
+        echo 'Push to Repo'
+        sudo docker login -u "vinayakentc" -p "Ganesh@298" docker.io
+        sudo docker push vinayakentc/test:"${env.BUILD_NUMBER}"}
         }
     }
     
