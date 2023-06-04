@@ -9,8 +9,7 @@ node {
 
     stage('Build image') {
   
-      
-        sh'sudo docker build -t vinayakentc/test .'
+       app = docker.build("raj80dockerid/test")
     }
 
     stage('Test image') {
@@ -22,12 +21,11 @@ node {
     }
 
     stage('Push image') {
-        echo 'Push to Repo'
-        sudo docker login -u "vinayakentc" -p "Ganesh@298" docker.io
-        sudo docker push vinayakentc/test:${BUILD_NUMBER}
+        
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
         }
     }
-    
     stage('Trigger ManifestUpdate') {
                 echo "triggering updatemanifestjob"
                 build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
