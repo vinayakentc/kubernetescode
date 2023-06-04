@@ -9,7 +9,8 @@ node {
 
     stage('Build image') {
   
-       app = sudo docker.build("vinayakentc/test")
+       #app = sudo docker.build("vinayakentc/test")
+        sh'sudo docker build -t vinayakentc/test .'
     }
 
     stage('Test image') {
